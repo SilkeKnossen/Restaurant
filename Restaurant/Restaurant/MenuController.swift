@@ -11,7 +11,7 @@ import UIKit
 
 class MenuController {
     
-    let baseURL = URL(string: "https://resto.mporg.nl/")!
+    let baseURL = URL(string: "https://resto.mprog.nl/")!
     static let shared = MenuController()
     static let orderUpdatedNotification = Notification.Name("MenuController.orderUpdated")
     var order = Order() {
@@ -24,26 +24,21 @@ class MenuController {
     func fetchCategories(completion: @escaping ([String]?) -> Void)
     {
         let categoryURL = baseURL.appendingPathComponent("categories")
-        print(categoryURL)
         let task = URLSession.shared.dataTask(with: categoryURL) { (data, response, error) in
-//            if let data = data,
-//                let jsonDictionary = try?
-//                    JSONSerialization.jsonObject(with: data) as?
-//                        [String:Any],
-//                let categories = jsonDictionary?["categories"] as?
-//                    [String] {
-            let categories = ["appetizers", "entrees"]
-            completion(categories)
-//            } else {
-//                completion(nil)
-//            }
+            if let data = data,
+                let jsonDictionary = try?
+                    JSONSerialization.jsonObject(with: data) as? [String:Any],
+                let categories = jsonDictionary?["categories"] as? [String] {
+                completion(categories)
+            } else {
+                completion(nil)
+            }
         }
         task.resume()
     }
     
     func fetchMenuItems(forCategory categoryName: String, completion: @escaping ([MenuItem]?) -> Void) {
         let initialMenuURL = baseURL.appendingPathComponent("menu")
-        print(initialMenuURL)
         var components = URLComponents(url: initialMenuURL, resolvingAgainstBaseURL: true)!
         components.queryItems = [URLQueryItem(name: "category", value: categoryName)]
         let menuURL = components.url!
@@ -57,7 +52,6 @@ class MenuController {
             }
         }
         task.resume()
-        
     }
     
     func submitOrder(forMenuIDs menuIds: [Int], completion: @escaping (Int?) -> Void) {

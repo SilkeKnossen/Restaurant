@@ -47,8 +47,5 @@ class MenuItemDetailViewController: UIViewController {
         
         MenuController.shared.order.menuItems.append(menuItem)
     }
-    
-//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 100
-//    }
+
 }
