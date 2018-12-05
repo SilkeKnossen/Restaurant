@@ -258,7 +258,6 @@
                                 <rect key="frame" x="160.5" y="352" width="54" height="30"/>
                                 <state key="normal" title="Dismiss"/>
                                 <connections>
-                                    <action selector="unwindToOrderListWithSegue:" destination="nsg-89-3eS" eventType="touchUpInside" id="Ua0-Jp-Lxp"/>
                                     <segue destination="B9Q-4Z-SiY" kind="unwind" identifier="DismissConfirmation" unwindAction="unwindToOrderListWithSegue:" id="AwC-vz-lgf"/>
                                 </connections>
                             </button>
