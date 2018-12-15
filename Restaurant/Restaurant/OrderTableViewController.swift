@@ -10,21 +10,23 @@ import UIKit
 
 class OrderTableViewController: UITableViewController {
     
+    // Initialize variable to store number of minutes untill order is ready.
     var orderMinutes = 0
     
+    // When the view did load, clear the notifications, and create
+    // edit button.
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = editButtonItem
-        
-        NotificationCenter.default.addObserver(tableView, selector:
-        #selector(UITableView.reloadData), name:
-        MenuController.orderUpdatedNotification, object: nil)
+        NotificationCenter.default.addObserver(tableView, selector: #selector(UITableView.reloadData), name: MenuController.orderUpdatedNotification, object: nil)
     }
     
+    // Number of row is number of items in the order list.
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return MenuController.shared.order.menuItems.count
     }
     
+    // Create cell for each item from order list
     override func tableView(_ tableView: UITableView, cellForRowAt
         indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:
@@ -33,6 +35,8 @@ class OrderTableViewController: UITableViewController {
         return cell
     }
     
+    // Fill each cell in the view with an image, title, and price
+    // of the menu item that is in the order list.
     func configure(_ cell: UITableViewCell, forItemAt indexPath:
         IndexPath) {
         let menuItem = MenuController.shared.order.menuItems[indexPath.row]
@@ -50,10 +54,12 @@ class OrderTableViewController: UITableViewController {
         }
     }
     
+    // Enable editing
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
+    // Enable cell to be deleted.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             MenuController.shared.order.menuItems.remove(at:
@@ -61,12 +67,14 @@ class OrderTableViewController: UITableViewController {
         }
     }
     
+    // When dismissing, remove all items from the order list.
     @IBAction func unwindToOrderList(segue: UIStoryboardSegue) {
         if segue.identifier == "DismissConfirmation" {
             MenuController.shared.order.menuItems.removeAll()
         }
     }
     
+    // When confirming, give the order-minutes to the next view.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ConfirmationSegue" {
             let orderConfirmationViewController = segue.destination as! OrderConfirmationViewController
@@ -74,6 +82,7 @@ class OrderTableViewController: UITableViewController {
         }
     }
     
+    // Compute minutes untill order is ready and show next view.
     func uploadOrder() {
         let menuIds = MenuController.shared.order.menuItems.map { $0.id }
         MenuController.shared.submitOrder(forMenuIDs: menuIds) { (minutes) in
@@ -87,6 +96,8 @@ class OrderTableViewController: UITableViewController {
         }
     }
     
+    // When the submit button is tapped, compute the total price,
+    // and show a pop up with option to upload the order or cancel.
     @IBAction func submitTapped(_ sender: Any) {
         let orderTotal =
             MenuController.shared.order.menuItems.reduce(0.0)

@@ -11,16 +11,24 @@ import UIKit
 
 class MenuController {
     
+    // Initialize the base url to connect with.
     let baseURL = URL(string: "https://resto.mprog.nl/")!
+    
+    // Make this class static accessable with a constant name.
     static let shared = MenuController()
+    
+    // Make notifications accessable with a constant name.
     static let orderUpdatedNotification = Notification.Name("MenuController.orderUpdated")
+    
+    // Initialize an order.
     var order = Order() {
         didSet {
-            NotificationCenter.default.post(name:
-            MenuController.orderUpdatedNotification, object: nil)
+            NotificationCenter.default.post(name: MenuController.orderUpdatedNotification, object: nil)
         }
     }
     
+    // Fetch all categories from the server in JSON format and store it in the
+    // categories struct. Change the base url to get this data.
     func fetchCategories(completion: @escaping ([String]?) -> Void)
     {
         let categoryURL = baseURL.appendingPathComponent("categories")
@@ -37,6 +45,8 @@ class MenuController {
         task.resume()
     }
     
+    // Fetch all menu items of one category from the server in JSON format and store
+    // it in the menu items struct. Change the base url to get this data.
     func fetchMenuItems(forCategory categoryName: String, completion: @escaping ([MenuItem]?) -> Void) {
         let initialMenuURL = baseURL.appendingPathComponent("menu")
         var components = URLComponents(url: initialMenuURL, resolvingAgainstBaseURL: true)!
@@ -54,6 +64,7 @@ class MenuController {
         task.resume()
     }
     
+    // Upload the order list items to the server in JSON format.
     func submitOrder(forMenuIDs menuIds: [Int], completion: @escaping (Int?) -> Void) {
         let orderURL = baseURL.appendingPathComponent("order")
         var request = URLRequest(url: orderURL)

@@ -8,6 +8,9 @@
 
 import Foundation
 
+/*
+ * Struct to store an order which is an array of menu items.
+ */
 struct Order: Codable {
     var menuItems: [MenuItem]
 

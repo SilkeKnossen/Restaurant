@@ -180,7 +180,7 @@
             </objects>
             <point key="canvasLocation" x="2741.5999999999999" y="98.50074962518741"/>
         </scene>
-        <!--Root View Controller-->
+        <!--Your Order List-->
         <scene sceneID="Yy7-JB-VHI">
             <objects>
                 <tableViewController id="vaq-hi-azd" customClass="OrderTableViewController" customModule="Restaurant" customModuleProvider="target" sceneMemberID="viewController">
@@ -224,7 +224,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="zTd-46-NL3">
+                    <navigationItem key="navigationItem" title="Your Order List" id="zTd-46-NL3">
                         <barButtonItem key="rightBarButtonItem" title="Submit" id="i5s-Yi-qkD">
                             <connections>
                                 <action selector="submitTapped:" destination="vaq-hi-azd" id="aJQ-KQ-8iB"/>

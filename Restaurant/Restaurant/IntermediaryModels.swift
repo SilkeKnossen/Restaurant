@@ -8,10 +8,16 @@
 
 import Foundation
 
+/*
+ * Struct to store an array of categories
+ */
 struct Categories: Codable {
     let categories: [String]
 }
 
+/*
+ * Struct to store preparation time
+ */
 struct PreparationTime: Codable {
     let prepTime: Int
     

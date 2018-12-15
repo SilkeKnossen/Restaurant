@@ -8,6 +8,9 @@
 
 import Foundation
 
+/*
+ * Struct to store details of a menu item.
+ */
 struct MenuItem: Codable {
     var id: Int
     var name: String
@@ -26,6 +29,9 @@ struct MenuItem: Codable {
     }
 }
 
+/*
+ * Struct for an array of menu items.
+ */
 struct MenuItems: Codable {
     let items: [MenuItem]
 }

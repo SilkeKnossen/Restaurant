@@ -10,12 +10,13 @@ import UIKit
 
 class MenuTableViewController: UITableViewController {
 
+    // Initialize the current menu items array and the current category.
     var menuItems = [MenuItem]()
     var category: String!
     
+    // When the view did load, fetch menu items and update the view.
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         title = category.capitalized
         MenuController.shared.fetchMenuItems(forCategory: category)
         { (menuItems) in
@@ -25,6 +26,8 @@ class MenuTableViewController: UITableViewController {
         }
     }
     
+    // Store the menu items in the array and reload it to make sure
+    // the cells are updated when the items are fetched.
     func updateUI(with menuItems: [MenuItem]) {
         DispatchQueue.main.async {
             self.menuItems = menuItems
@@ -32,10 +35,12 @@ class MenuTableViewController: UITableViewController {
         }
     }
     
+    // Number of rows is the number of menu items.
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return menuItems.count
     }
     
+    // Create each cell for the menu items table view.
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:
             "MenuCellIdentifier", for: indexPath)
@@ -43,14 +48,7 @@ class MenuTableViewController: UITableViewController {
         return cell
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "MenuDetailSegue" {
-            let menuItemDetailViewController = segue.destination as! MenuItemDetailViewController
-            let index = tableView.indexPathForSelectedRow!.row
-            menuItemDetailViewController.menuItem = menuItems[index]
-        }
-    }
-    
+    // Fill each cell with an image, title, and price of one menu item from the array.
     func configure(_ cell: UITableViewCell, forItemAt indexPath: IndexPath) {
         let menuItem = menuItems[indexPath.row]
         cell.textLabel?.text = menuItem.name
@@ -61,10 +59,20 @@ class MenuTableViewController: UITableViewController {
                 if let currentIndexPath = self.tableView.indexPath(for: cell), currentIndexPath != indexPath {
                     return
                 }
-            cell.imageView?.image = image
-            cell.setNeedsLayout()
+                cell.imageView?.image = image
+                cell.setNeedsLayout()
             }
         }
     }
+    
+    // Give the menu item that is clicked to the next view controller.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "MenuDetailSegue" {
+            let menuItemDetailViewController = segue.destination as! MenuItemDetailViewController
+            let index = tableView.indexPathForSelectedRow!.row
+            menuItemDetailViewController.menuItem = menuItems[index]
+        }
+    }
+    
 }
 

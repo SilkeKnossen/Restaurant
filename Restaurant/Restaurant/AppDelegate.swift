@@ -14,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var orderTabBarItem: UITabBarItem!
     
+    // Enable notifications of the bar button for order.
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let temporaryDirectory = NSTemporaryDirectory()
         let urlCache = URLCache(memoryCapacity: 25_000_000,
@@ -30,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    // Update the notifications of the bar button for order.
     @objc func updateOrderBadge() {
         switch MenuController.shared.order.menuItems.count {
         case 0:
